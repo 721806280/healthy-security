@@ -1,0 +1,126 @@
+spring:
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test2?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    max-active: 100
+    min-idle: 10
+    min-evictable-idle-time-millis: 1800000
+    test-on-borrow: true
+    test-on-return: true
+    test-while-idle: true
+    validation-query: select 1
+  # redis配置
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+  # session存储方式
+  session:
+    store-type: none
+  # 模板引擎
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    # 禁用缓存
+    cache: false
+
+server:
+  # 服务端口
+  port: 8080
+  servlet:
+    session:
+      # session超时时间(秒)
+      timeout: 600
+
+# 日志配置
+logging:
+  level:
+    root: info
+    org.springframework: info
+    com.healthy: debug
+    org.springframework.social: info
+
+# 浏览器环境配置项，参见BrowserProperties
+healthy:
+  security:
+    # 浏览器环境配置项，参见BrowserProperties
+    browser:
+      #sign-in-page: /demo-signIn.html
+      sign-in-response-type: REDIRECT
+      sing-in-success-url: /index.html
+      #remember-me-seconds: 294000
+      #log-out-url: /demo-logout.html
+      #log-out-success-url: /healthy-logout.html
+      sign-up-url: /demo-signUp.html
+      # session管理相关配置，参见SessionProperties
+      session:
+        maximum-sessions: 1
+        max-sessions-prevents-login: false
+        session-invalid-url: /healthy-session-invalid.html
+    code:
+      # 图片验证码配置项，参见ImageCodeProperties
+      image:
+        length: 4
+        width: 95
+        height: 35
+        font-zize: 30
+        expire-in: 30
+        #url: /user/*
+      # 短信验证码配置项, 参见SmsCodeProperties
+      sms:
+        length: 6
+        expire-in: 60
+        #url: /user/*
+    # 社交登录功能拦截的url,参见SocilaProperties
+    social:
+      # UserConnection 表前缀, 如 "healthy_"
+      #jdbc-table-prefix:
+      filter-processes-url: /login
+      # QQ登录配置，参见QQProperties
+      qq:
+        app-id:
+        app-secret:
+        provider-id: qq
+      # 微信登录配置，参见WeixinProperties
+      weixin:
+        app-id: wx5159738097799a54
+        app-secret: 92933888b34eee620fb4296b4d8db5cd
+        provider-id: weixin
+        # 微信公众号登录配置，参见WeixinMpProperties
+      weixinmp:
+        app-id: wxe8a93a0ad4a1197d
+        app-secret: dd955cdef2521dcf6fc5c44106d8fd89
+        provider-id: weixinmp
+      # 微博登录配置，参见WeiboProperties
+      weibo:
+        app-id:
+        app-secret:
+        provider-id: weibo
+    # 认证服务器注册的第三方应用配置项，参见OAuth2ClientProperties
+    oauth2:
+      # OAuth2认证服务器的tokenStore的类型，可选值为redis和jwt，值为jwt时发出的token为jwt
+      token-store: jwt
+      # 使用jwt时为token签名的秘钥
+      jwt-signing-key: healthy
+      # clientDetail存储策略，默认NONE，可选值：JDBC(数据库存储)，NONE(内存存储)， 需建立数据库表(参见 db.sql)
+      client-detail-store-type: JDBC
+      # 第三方应用秘钥信息配置项
+      clients[0]:
+        client-id: healthy
+        client-secret: healthySecret
+        authorized-grant-types: refresh_token, authorization_code, password
+        access-token-validate-seconds: 3600
+        redirect-uri: http://www.baidu.com

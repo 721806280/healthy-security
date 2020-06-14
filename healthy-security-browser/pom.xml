@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.healthy.security</groupId>
+        <artifactId>healthy-security</artifactId>
+        <version>1.0.0.RELEASE</version>
+    </parent>
+    <description>浏览器模块</description>
+    <artifactId>healthy-security-browser</artifactId>
+
+    <dependencies>
+        <!--核心安全模块-->
+        <dependency>
+            <groupId>com.healthy.security</groupId>
+            <artifactId>healthy-security-core</artifactId>
+        </dependency>
+        <!-- Spring-Session -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-core</artifactId>
+        </dependency>
+        <!-- Spring-Session-Redis -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        <!-- SpringBoot集成thymeleaf模板 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!--对Thymeleaf添加Spring Security标签支持-->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
+    </dependencies>
+</project>

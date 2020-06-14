@@ -1,0 +1,36 @@
+{
+  "groups": [
+    {
+      "name": "healthy.security",
+      "type": "com.healthy.security.core.properties.SecurityProperties",
+      "sourceType": "com.healthy.security.core.properties.SecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "healthy.security.browser",
+      "type": "com.healthy.security.core.properties.BrowserProperties",
+      "description": "浏览器环境配置",
+      "sourceType": "com.healthy.security.core.properties.SecurityProperties"
+    },
+    {
+      "name": "healthy.security.code",
+      "type": "com.healthy.security.core.properties.ValidateCodeProperties",
+      "description": "验证码配置",
+      "sourceType": "com.healthy.security.core.properties.SecurityProperties"
+    },
+    {
+      "name": "healthy.security.oauth2",
+      "type": "com.healthy.security.core.properties.OAuth2Properties",
+      "description": "OAuth2认证服务器配置",
+      "sourceType": "com.healthy.security.core.properties.SecurityProperties"
+    },
+    {
+      "name": "healthy.security.social",
+      "type": "com.healthy.security.core.properties.SocialProperties",
+      "description": "社交登录配置",
+      "sourceType": "com.healthy.security.core.properties.SecurityProperties"
+    }
+  ],
+  "hints": []
+}
