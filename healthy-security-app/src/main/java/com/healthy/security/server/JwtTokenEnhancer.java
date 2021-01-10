@@ -1,11 +1,11 @@
 package com.healthy.security.server;
 
+import com.healthy.security.core.properties.SecurityProperties;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,14 +14,18 @@ import java.util.Map;
  */
 public class JwtTokenEnhancer implements TokenEnhancer {
 
-    @Override
-    public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        Map<String, Object> info = new HashMap<>(1);
-        info.put("company", "healthy");
+    private final SecurityProperties securityProperties;
 
-        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
-
-        return accessToken;
+    public JwtTokenEnhancer(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
     }
 
+    @Override
+    public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
+        DefaultOAuth2AccessToken defaultOAuth2AccessToken = new DefaultOAuth2AccessToken(accessToken);
+        Map<String, Object> info = defaultOAuth2AccessToken.getAdditionalInformation();
+        info.put("jwtSigningKey", securityProperties.getOauth2().getJwtSigningKey());
+        defaultOAuth2AccessToken.setAdditionalInformation(info);
+        return defaultOAuth2AccessToken;
+    }
 }

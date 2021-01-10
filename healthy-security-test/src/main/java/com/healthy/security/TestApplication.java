@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TestApplication {
 
-    // private final TokenStore redisTokenStore;
+    private final TokenStore redisTokenStore;
 
     private final ProviderSignInUtils providerSignInUtils;
 
@@ -54,7 +54,7 @@ public class TestApplication {
         return principal;
     }
 
-    /*@ResponseBody
+    @ResponseBody
     @PostMapping("/logouts")
     public ResponseEntity logout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -73,7 +73,7 @@ public class TestApplication {
         redisTokenStore.removeAccessTokenUsingRefreshToken(oAuth2RefreshToken);
 
         return ResponseEntity.ok(new SimpleResponse("exit success."));
-    }*/
+    }
 
     @ResponseBody
     @PostMapping("/user/regist")

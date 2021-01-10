@@ -2,7 +2,7 @@ spring:
   # 数据源配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test2?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
     password: 123456
     max-active: 100
@@ -96,13 +96,13 @@ healthy:
         provider-id: qq
       # 微信登录配置，参见WeixinProperties
       weixin:
-        app-id: wx5159738097799a54
-        app-secret: 92933888b34eee620fb4296b4d8db5cd
+        app-id:
+        app-secret:
         provider-id: weixin
-        # 微信公众号登录配置，参见WeixinMpProperties
+      # 微信公众号登录配置，参见WeixinMpProperties
       weixinmp:
-        app-id: wxe8a93a0ad4a1197d
-        app-secret: dd955cdef2521dcf6fc5c44106d8fd89
+        app-id:
+        app-secret:
         provider-id: weixinmp
       # 微博登录配置，参见WeiboProperties
       weibo:

@@ -29,7 +29,7 @@ public class WeixinOAuth2ServiceProvider extends AbstractOAuth2ServiceProvider<W
     /**
      * @param accessToken
      * @return
-     * @see org.springframework.social.oauth2.AbstractOAuth2ServiceProvider#getApi(java.lang.String)
+     * @see AbstractOAuth2ServiceProvider#getApi(String)
      */
     @Override
     public Weixin getApi(String accessToken) {

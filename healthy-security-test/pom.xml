@@ -13,14 +13,14 @@
 
     <dependencies>
         <!--浏览器模块-->
-        <dependency>
-            <groupId>com.healthy.security</groupId>
-            <artifactId>healthy-security-browser</artifactId>
-        </dependency>
-        <!--APP模块-->
         <!--<dependency>
             <groupId>com.healthy.security</groupId>
-            <artifactId>healthy-security-app</artifactId>
+            <artifactId>healthy-security-browser</artifactId>
         </dependency>-->
+        <!--APP模块-->
+        <dependency>
+            <groupId>com.healthy.security</groupId>
+            <artifactId>healthy-security-app</artifactId>
+        </dependency>
     </dependencies>
 </project>

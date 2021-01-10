@@ -6,8 +6,8 @@
 #### 软件依赖
 | 框架             | 版本                           |
 | :---------------|:-------------------------------:|
-| spring boot     | 2.2.1.RELEASE                   |
-| spring cloud    | Hoxton.RELEASE                   |
+| spring boot     | 2.3.7.RELEASE                   |
+| spring cloud    | Hoxton.SR9                   |
 | spring social   | 1.1.6.RELEASE                   |
 | Lombok          | 1.18.10                         |
 

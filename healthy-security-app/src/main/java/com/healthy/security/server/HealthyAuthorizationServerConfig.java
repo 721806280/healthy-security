@@ -26,6 +26,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 认证服务器配置
@@ -79,7 +80,7 @@ public class HealthyAuthorizationServerConfig extends AuthorizationServerConfigu
                 .userDetailsService(userDetailsService)
                 .setClientDetailsService(clientDetails);
 
-        if (jwtAccessTokenConverter != null && jwtTokenEnhancer != null) {
+        if (Objects.nonNull(jwtAccessTokenConverter)) {
             TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
             List<TokenEnhancer> enhancers = new ArrayList<>();
             enhancers.add(jwtTokenEnhancer);
