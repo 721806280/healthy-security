@@ -27,6 +27,7 @@
         <module>healthy-security-app</module>
         <module>healthy-security-browser</module>
         <module>healthy-security-test</module>
+        <module>OSSRH-63316</module>
     </modules>
 
     <!--统一管理-->
@@ -73,6 +74,11 @@
             <dependency>
                 <groupId>com.healthy.security</groupId>
                 <artifactId>healthy-security-app</artifactId>
+                <version>${healthy.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.healthy.security</groupId>
+                <artifactId>OSSRH-63316</artifactId>
                 <version>${healthy.security.version}</version>
             </dependency>
             <!--social 社交登录-->
