@@ -54,7 +54,7 @@
         1). 检查：com.healthy.security.browser.BrowserSecurityConfig中是否初始化PersistentTokenRepository
             /**
              * 记住我功能的token存取器配置
-             * 自动创建数据库表 okenRepository.setCreateTableOnStartup(true);
+             * 自动创建数据库表 tokenRepository.setCreateTableOnStartup(true);
              * @return PersistentTokenRepository
              */
             @Bean
