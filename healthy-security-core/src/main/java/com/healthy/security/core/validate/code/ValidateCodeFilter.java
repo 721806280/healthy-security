@@ -6,11 +6,13 @@ import com.healthy.security.core.properties.SecurityProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.UrlPathHelper;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,35 +24,46 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 校验验证码的过滤器
+ * ValidateCodeFilter
+ *
+ * @author xiaomingzhang
  */
 @Slf4j
 @Component("validateCodeFilter")
 public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
     /**
+     * 存放所有需要校验验证码的url
+     */
+    private final Map<String, ValidateCodeType> urlMap = new HashMap<>();
+
+    /**
+     * 验证请求url与配置的url是否匹配的工具类
+     */
+    private final AntPathMatcher pathMatcher = new AntPathMatcher();
+
+    /**
+     * URL路径匹配的帮助工具类
+     */
+    private final UrlPathHelper urlPathHelper = new UrlPathHelper();
+
+    /**
      * 验证码校验失败处理器
      */
     @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
+
     /**
      * 系统配置信息
      */
     @Autowired
     private SecurityProperties securityProperties;
+
     /**
      * 系统中的校验码处理器
      */
     @Autowired
     private ValidateCodeProcessorHolder validateCodeProcessorHolder;
-    /**
-     * 存放所有需要校验验证码的url
-     */
-    private Map<String, ValidateCodeType> urlMap = new HashMap<>();
-    /**
-     * 验证请求url与配置的url是否匹配的工具类
-     */
-    private AntPathMatcher pathMatcher = new AntPathMatcher();
 
     /**
      * 初始化要拦截的url配置信息
@@ -99,7 +112,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         }
 
         chain.doFilter(request, response);
-
     }
 
     /**
@@ -110,15 +122,14 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
      */
     private ValidateCodeType getValidateCodeType(HttpServletRequest request) {
         ValidateCodeType result = null;
-        if (!StrUtil.equalsIgnoreCase(request.getMethod(), "get")) {
+        if (!HttpMethod.GET.matches(request.getMethod().toUpperCase())) {
             Set<String> urls = urlMap.keySet();
             for (String url : urls) {
-                if (pathMatcher.match(url, request.getRequestURI())) {
+                if (pathMatcher.match(url, urlPathHelper.getLookupPathForRequest(request))) {
                     result = urlMap.get(url);
                 }
             }
         }
         return result;
     }
-
 }
