@@ -1,7 +1,7 @@
 package com.healthy.security.core.authentication;
 
-import com.healthy.security.core.processor.UserDetailsProcessorHolder;
 import com.healthy.security.core.properties.SecurityConstants;
+import com.healthy.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
@@ -10,26 +10,32 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 /**
- * 表单登录配置
+ * FormAuthenticationConfig
+ *
+ * @author xiaomingzhang
  */
 @Component
 public class FormAuthenticationConfig {
 
     @Autowired
-    protected AuthenticationSuccessHandler healthyAuthenticationSuccessHandler;
+    private SecurityProperties securityProperties;
 
     @Autowired
-    protected AuthenticationFailureHandler healthyAuthenticationFailureHandler;
+    private AuthenticationSuccessHandler healthyAuthenticationSuccessHandler;
 
     @Autowired
-    protected UserDetailsProcessorHolder userDetailsProcessorHolder;
+    private AuthenticationFailureHandler healthyAuthenticationFailureHandler;
 
     public void configure(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new HealthyAuditLogFilter(userDetailsProcessorHolder), ExceptionTranslationFilter.class)
-                .formLogin() // 身份认证的方式 - 表单登录
+        http
+                .formLogin()
                 .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
                 .loginProcessingUrl(SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_FORM)
                 .successHandler(healthyAuthenticationSuccessHandler)
                 .failureHandler(healthyAuthenticationFailureHandler);
+
+        if (securityProperties.isEnableAuditLog()) {
+            http.addFilterBefore(new HealthyAuditLogFilter(), ExceptionTranslationFilter.class);
+        }
     }
 }

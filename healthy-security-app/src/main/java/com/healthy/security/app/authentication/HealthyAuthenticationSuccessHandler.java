@@ -4,8 +4,6 @@ import cn.hutool.core.codec.Base64Decoder;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.json.JSONUtil;
-import com.healthy.security.core.processor.UserDetailsProcessor;
-import com.healthy.security.core.processor.UserDetailsProcessorHolder;
 import com.healthy.security.core.properties.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,19 +38,9 @@ public class HealthyAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     @Autowired
     private AuthorizationServerTokenServices authorizationServerTokenServices;
 
-    @Autowired
-    private UserDetailsProcessorHolder userDetailsProcessorHolder;
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
-        Object principal = authentication.getPrincipal();
-
-        String userName = userDetailsProcessorHolder.findUserDetailsPrincipal(principal);
-
-        //String userName = principal instanceof SocialUserDetails ? ((SocialUserDetails) principal).getUserId() : (String) principal;
-
-        log.info("[{}]登录成功.", userName);
+        log.info("[{}]登录成功.", authentication.getName());
 
         String header = request.getHeader("Authorization");
 
@@ -84,7 +72,6 @@ public class HealthyAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 
         response.setContentType(SecurityConstants.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().write(JSONUtil.toJsonStr(token));
-
     }
 
     private String[] extractAndDecodeHeader(String header) {
