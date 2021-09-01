@@ -1,20 +1,22 @@
 package com.healthy.security.app.authentication;
 
-import cn.hutool.core.codec.Base64Decoder;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.json.JSONUtil;
 import com.healthy.security.core.properties.SecurityConstants;
+import com.healthy.security.core.support.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationConverter;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -29,6 +31,8 @@ import java.io.IOException;
 @Component("healthyAuthenticationSuccessHandler")
 public class HealthyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    private final BasicAuthenticationConverter authenticationConverter = new BasicAuthenticationConverter();
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -40,49 +44,44 @@ public class HealthyAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.info("[{}]登录成功.", authentication.getName());
-
-        String header = request.getHeader("Authorization");
-
-        if (header == null || !header.startsWith("Basic ")) {
-            throw new UnapprovedClientAuthenticationException("请求头中无client信息");
-        }
-
-        String[] tokens = extractAndDecodeHeader(header);
-        assert tokens.length == 2;
-
-        String clientId = tokens[0];
-        String clientSecret = tokens[1];
-
-        ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
-
-        if (clientDetails == null) {
-            throw new UnapprovedClientAuthenticationException("clientId对应的配置信息不存在:" + clientId);
-        } else if (!passwordEncoder.matches(clientSecret, clientDetails.getClientSecret())) {
-            throw new UnapprovedClientAuthenticationException("clientSecret不匹配:" + clientId);
-        }
-
-        TokenRequest tokenRequest = new TokenRequest(MapUtil.newHashMap(), clientId, clientDetails.getScope(), "custom");
-
-        OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
-
-        OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
-
-        OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
-
         response.setContentType(SecurityConstants.APPLICATION_JSON_UTF8_VALUE);
-        response.getWriter().write(JSONUtil.toJsonStr(token));
-    }
+        log.info("认证成功: [{}]", authentication.getName());
+        try {
+            UsernamePasswordAuthenticationToken authRequest = this.authenticationConverter.convert(request);
 
-    private String[] extractAndDecodeHeader(String header) {
+            if (authRequest == null) {
+                throw new BadCredentialsException("Empty basic authentication token");
+            }
 
-        String token = Base64Decoder.decodeStr(header.substring(6), CharsetUtil.CHARSET_UTF_8);
+            String clientId = authRequest.getName();
+            String clientSecret = authRequest.getCredentials().toString();
 
-        int index = token.indexOf(":");
+            if (log.isDebugEnabled()) {
+                log.debug("Basic Authentication Authorization header found for user '" + clientId + "'");
+            }
 
-        if (index == -1) {
-            throw new BadCredentialsException("Invalid basic authentication token");
+            ClientDetails clientDetails = clientDetailsService.loadClientByClientId(clientId);
+
+            if (!passwordEncoder.matches(clientSecret, clientDetails.getClientSecret())) {
+                throw new UnapprovedClientAuthenticationException("client secret is incorrect");
+            }
+
+            TokenRequest tokenRequest = new TokenRequest(MapUtil.newHashMap(), clientId, clientDetails.getScope(), "custom");
+
+            OAuth2Request oAuth2Request = tokenRequest.createOAuth2Request(clientDetails);
+
+            OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, authentication);
+
+            OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
+
+            response.getWriter().write(JSONUtil.toJsonStr(token));
+        } catch (ClientRegistrationException e) {
+            log.error(e.getMessage(), e);
+            response.getWriter().write(JSONUtil.toJsonStr(new SimpleResponse(e.getMessage())));
+        } catch (AuthenticationException e) {
+            log.error(e.getMessage(), e);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write(JSONUtil.toJsonStr(new SimpleResponse(e.getMessage())));
         }
-        return new String[]{token.substring(0, index), token.substring(index + 1)};
     }
 }

@@ -2,10 +2,8 @@ package com.healthy.security.app.authentication;
 
 import cn.hutool.json.JSONUtil;
 import com.healthy.security.core.properties.SecurityConstants;
-import com.healthy.security.core.properties.SecurityProperties;
 import com.healthy.security.core.support.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -22,9 +20,6 @@ import java.io.IOException;
 @Slf4j
 @Component("healthyAuthenticationFailureHandler")
 public class HealthyAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-
-    @Autowired
-    private SecurityProperties securityProperties;
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {

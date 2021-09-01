@@ -84,7 +84,7 @@ healthy:
         length: 6
         expire-in: 60
         #url: /user/*
-    # 社交登录功能拦截的url,参见SocilaProperties
+    # 社交登录功能拦截的url,参见SocialProperties
     social:
       # UserConnection 表前缀, 如 "healthy_"
       #jdbc-table-prefix:
@@ -123,4 +123,4 @@ healthy:
         client-secret: healthySecret
         authorized-grant-types: refresh_token, authorization_code, password
         access-token-validate-seconds: 3600
-        redirect-uri: http://www.baidu.com
+        redirect-uri: https://www.baidu.com
