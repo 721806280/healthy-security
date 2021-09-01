@@ -1,5 +1,6 @@
 package com.healthy.security.core.social.qq.connet;
 
+import cn.hutool.core.text.CharPool;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -9,6 +10,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Slf4j
 public class QQOAuth2Template extends OAuth2Template {
@@ -28,13 +30,12 @@ public class QQOAuth2Template extends OAuth2Template {
 
     @Override
     protected AccessGrant postForAccessGrant(String accessTokenUrl, MultiValueMap<String, String> parameters) {
-        //return null;
         String responseStr = getRestTemplate().postForObject(accessTokenUrl, parameters, String.class);
         log.info("获取accessToke的响应：" + responseStr);
-        String[] items = StrUtil.split(responseStr, "&");
-        String accessToken = StrUtil.subAfter(items[0], "=", true);
-        Long expiresIn = new Long(StrUtil.subAfter(items[1], "=", true));
-        String refreshToken = StrUtil.subAfter(items[2], "=", true);
+        List<String> items = StrUtil.split(responseStr, CharPool.AMP);
+        String accessToken = StrUtil.subAfter(items.get(0), "=", true);
+        Long expiresIn = Long.valueOf(StrUtil.subAfter(items.get(1), "=", true));
+        String refreshToken = StrUtil.subAfter(items.get(2), "=", true);
         return new AccessGrant(accessToken, null, refreshToken, expiresIn);
     }
 }

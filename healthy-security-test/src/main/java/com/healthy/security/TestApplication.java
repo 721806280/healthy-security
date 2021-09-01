@@ -1,5 +1,6 @@
 package com.healthy.security;
 
+import com.healthy.security.app.social.AppSignInUtils;
 import com.healthy.security.core.support.SimpleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +32,9 @@ public class TestApplication {
 
     private final TokenStore redisTokenStore;
 
-    private final ProviderSignInUtils providerSignInUtils;
+    /*private final ProviderSignInUtils providerSignInUtils;*/
 
-    /* private final AppSignInUtils appSignInUtils; */
+    private final AppSignInUtils appSignInUtils;
 
     public static void main(String[] args) {
         SpringApplication.run(TestApplication.class, args);
@@ -78,7 +78,7 @@ public class TestApplication {
     @ResponseBody
     @PostMapping("/user/regist")
     public void regist(HttpServletRequest request) {
-        providerSignInUtils.doPostSignUp("admin", new ServletWebRequest(request));
-        // appSignInUtils.doPostSignUp("admin", new ServletWebRequest(request));
+        // providerSignInUtils.doPostSignUp("admin", new ServletWebRequest(request));
+        appSignInUtils.doPostSignUp("admin", new ServletWebRequest(request));
     }
 }

@@ -1,5 +1,6 @@
 package com.healthy.security.core.validate.code;
 
+import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.StrUtil;
 import com.healthy.security.core.properties.SecurityConstants;
 import com.healthy.security.core.properties.SecurityProperties;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -87,7 +89,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
      */
     protected void addUrlToMap(String urlString, ValidateCodeType type) {
         if (StrUtil.isNotBlank(urlString)) {
-            String[] urls = StrUtil.split(urlString, ",");
+            List<String> urls = StrUtil.split(urlString, StrPool.C_COMMA);
             for (String url : urls) {
                 urlMap.put(url, type);
             }

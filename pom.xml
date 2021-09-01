@@ -14,12 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <healthy.security.version>1.0.0.RELEASE</healthy.security.version>
-        <spring-boot.version>2.3.9.RELEASE</spring-boot.version>
-        <spring-cloud.version>Hoxton.SR10</spring-cloud.version>
-        <spring-cloud-alibaba.version>2.2.3.RELEASE</spring-cloud-alibaba.version>
+        <spring-boot.version>2.5.4</spring-boot.version>
+        <spring-cloud.version>2020.0.3</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <security.oauth.version>2.3.6.RELEASE</security.oauth.version>
         <spring.social.version>1.1.6.RELEASE</spring.social.version>
-        <hutool.version>5.6.3</hutool.version>
-        <kaptcha.version>2.3.2</kaptcha.version>
+        <hutool.version>5.7.9</hutool.version>
     </properties>
     <!--子模块-->
     <modules>
@@ -75,10 +75,11 @@
                 <artifactId>healthy-security-app</artifactId>
                 <version>${healthy.security.version}</version>
             </dependency>
+            <!-- Oauth2 -->
             <dependency>
-                <groupId>com.healthy.security</groupId>
-                <artifactId>OSSRH-63316</artifactId>
-                <version>${healthy.security.version}</version>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${security.oauth.version}</version>
             </dependency>
             <!--social 社交登录-->
             <dependency>
@@ -107,20 +108,14 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <!-- 图形验证码 -->
-            <dependency>
-                <groupId>com.github.penggle</groupId>
-                <artifactId>kaptcha</artifactId>
-                <version>${kaptcha.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
     <!--阿里云镜像-->
     <repositories>
         <repository>
             <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <name>AliYun nexus</name>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -129,8 +124,8 @@
     <pluginRepositories>
         <pluginRepository>
             <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <name>AliYun nexus</name>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

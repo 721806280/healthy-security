@@ -4,12 +4,14 @@
 >Universal security module Integration spring security, spring cloud oauth, spring social, user name and password, mobile phone verification code, social (WeChat, QQ, Weibo) and other common login methods, jwt-based sso, cluster session management and other functions.
 
 #### Software Dependency
-| Framework | Version |
-| :---------------|:--------:|
-| spring boot | 2.3.7.RELEASE |
-| spring cloud | Hoxton.SR9 |
-| spring social | 1.1.6.RELEASE |
-| Lombok | 1.18.10 |
+| Dependency | Version |
+| ---------------------- | ------------- |
+| Spring Boot | 2.5.4 |
+| Spring Cloud | 2020.0.3 |
+| Spring Cloud Alibaba | 2021.1 |
+| Spring Security OAuth2 | 2.3.6 |
+| Mybatis Plus | 3.4.2 |
+| HuTool | 5.7.9 |
 
 #### Project Structure
 | Name | Description |

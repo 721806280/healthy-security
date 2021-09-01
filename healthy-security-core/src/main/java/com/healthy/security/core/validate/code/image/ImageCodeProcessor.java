@@ -1,5 +1,7 @@
 package com.healthy.security.core.validate.code.image;
 
+import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.io.IoUtil;
 import com.healthy.security.core.validate.code.impl.AbstractValidateCodeProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -17,7 +19,7 @@ public class ImageCodeProcessor extends AbstractValidateCodeProcessor<ImageCode>
      */
     @Override
     protected void send(ServletWebRequest request, ImageCode imageCode) throws Exception {
-        ImageIO.write(imageCode.getImage(), "JPEG", request.getResponse().getOutputStream());
+        ImgUtil.writeJpg(imageCode.getImage(), request.getResponse().getOutputStream());
     }
 
 }

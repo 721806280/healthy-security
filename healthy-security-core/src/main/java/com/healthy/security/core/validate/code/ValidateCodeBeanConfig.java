@@ -3,11 +3,13 @@ package com.healthy.security.core.validate.code;
 import com.healthy.security.core.properties.SecurityProperties;
 import com.healthy.security.core.validate.code.image.ImageCodeGenerator;
 import com.healthy.security.core.validate.code.sms.DefaultSmsCodeSender;
+import com.healthy.security.core.validate.code.sms.SmsCodeGenerator;
 import com.healthy.security.core.validate.code.sms.SmsCodeSender;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.Resource;
 
 /**
  * 验证码相关的扩展点配置。配置在这里的bean，业务系统都可以通过声明同类型或同名的bean来覆盖安全
@@ -16,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ValidateCodeBeanConfig {
 
-    @Autowired
+    @Resource
     private SecurityProperties securityProperties;
 
     /**
@@ -28,8 +30,22 @@ public class ValidateCodeBeanConfig {
     @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
     public ValidateCodeGenerator imageValidateCodeGenerator() {
         ImageCodeGenerator codeGenerator = new ImageCodeGenerator();
-        codeGenerator.setSecurityProperties(securityProperties);
+        codeGenerator.setImageCodeProperties(securityProperties.getCode().getImage());
         return codeGenerator;
+    }
+
+
+    /**
+     * 短信验证码图片生成器
+     *
+     * @return
+     */
+    @Bean
+    @ConditionalOnMissingBean(name = "smsValidateCodeGenerator")
+    public ValidateCodeGenerator smsValidateCodeGenerator() {
+        SmsCodeGenerator smsCodeGenerator = new SmsCodeGenerator();
+        smsCodeGenerator.setSmsCodeProperties(securityProperties.getCode().getSms());
+        return smsCodeGenerator;
     }
 
     /**
