@@ -24,7 +24,7 @@ public class ValidateCodeBeanConfig {
     /**
      * 图片验证码图片生成器
      *
-     * @return
+     * @return {@link ImageCodeGenerator}
      */
     @Bean
     @ConditionalOnMissingBean(name = "imageValidateCodeGenerator")
@@ -34,11 +34,10 @@ public class ValidateCodeBeanConfig {
         return codeGenerator;
     }
 
-
     /**
      * 短信验证码图片生成器
      *
-     * @return
+     * @return {@link SmsCodeGenerator}
      */
     @Bean
     @ConditionalOnMissingBean(name = "smsValidateCodeGenerator")
@@ -51,7 +50,7 @@ public class ValidateCodeBeanConfig {
     /**
      * 短信验证码发送器
      *
-     * @return
+     * @return {@link DefaultSmsCodeSender}
      */
     @Bean
     @ConditionalOnMissingBean(SmsCodeSender.class)
