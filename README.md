@@ -6,11 +6,11 @@
 #### 软件依赖
 | 依赖                   | 版本           |
 | ---------------------- | ------------- |
-| Spring Boot            | 2.5.4         |
-| Spring Cloud           | 2020.0.3      |
+| Spring Boot            | 2.5.6         |
+| Spring Cloud           | 2020.0.4      |
 | Spring Cloud Alibaba   | 2021.1        |
 | Spring Security OAuth2 | 2.3.6         |
-| HuTool                 | 5.7.9         |
+| HuTool                 | 5.7.15         |
 
 #### 项目结构
 | 名称             | 描述        |

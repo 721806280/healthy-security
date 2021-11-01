@@ -6,12 +6,11 @@
 #### Software Dependency
 | Dependency | Version |
 | ---------------------- | ------------- |
-| Spring Boot | 2.5.4 |
-| Spring Cloud | 2020.0.3 |
+| Spring Boot | 2.5.6 |
+| Spring Cloud | 2020.0.4 |
 | Spring Cloud Alibaba | 2021.1 |
 | Spring Security OAuth2 | 2.3.6 |
-| Mybatis Plus | 3.4.2 |
-| HuTool | 5.7.9 |
+| HuTool | 5.7.15 |
 
 #### Project Structure
 | Name | Description |
