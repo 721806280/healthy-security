@@ -14,12 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <healthy.security.version>1.0.0.RELEASE</healthy.security.version>
-        <spring-boot.version>2.5.4</spring-boot.version>
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
+        <spring-boot.version>2.5.6</spring-boot.version>
+        <spring-cloud.version>2020.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <security.oauth.version>2.3.6.RELEASE</security.oauth.version>
         <spring.social.version>1.1.6.RELEASE</spring.social.version>
-        <hutool.version>5.7.12</hutool.version>
+        <hutool.version>5.7.15</hutool.version>
     </properties>
     <!--子模块-->
     <modules>
