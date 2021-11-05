@@ -2,6 +2,7 @@ package com.healthy.security.core.social;
 
 import cn.hutool.core.util.StrUtil;
 import com.healthy.security.core.properties.SecurityProperties;
+import com.healthy.security.core.social.connect.jdbc.HealthyJdbcUsersConnectionRepository;
 import com.healthy.security.core.social.support.HealthySpringSocialConfigurer;
 import com.healthy.security.core.social.support.SocialAuthenticationFilterPostProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.*;
-import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
@@ -42,23 +42,23 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-        JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource,
-                connectionFactoryLocator, Encryptors.noOpText());
+        HealthyJdbcUsersConnectionRepository usersConnectionRepository = new HealthyJdbcUsersConnectionRepository(
+                dataSource, connectionFactoryLocator, Encryptors.noOpText());
 
         String jdbcTablePrefix = securityProperties.getSocial().getJdbcTablePrefix();
         if (StrUtil.isNotBlank(jdbcTablePrefix)) {
-            repository.setTablePrefix(jdbcTablePrefix);
+            usersConnectionRepository.setTablePrefix(jdbcTablePrefix);
         }
         if (connectionSignUp != null) {
-            repository.setConnectionSignUp(connectionSignUp);
+            usersConnectionRepository.setConnectionSignUp(connectionSignUp);
         }
-        return repository;
+        return usersConnectionRepository;
     }
 
     /**
      * 社交登录配置类，供浏览器或app模块引入设计登录配置用。
      *
-     * @return
+     * @return {@link SpringSocialConfigurer}
      */
     @Bean
     public SpringSocialConfigurer healthySocialSecurityConfig() {
@@ -73,7 +73,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
      * 用来处理注册流程的工具类
      *
      * @param connectionFactoryLocator
-     * @return
+     * @return {@link ProviderSignInUtils}
      */
     @Bean
     public ProviderSignInUtils providerSignInUtils(ConnectionFactoryLocator connectionFactoryLocator) {
