@@ -4,21 +4,21 @@
 >Universal security module Integration spring security, spring cloud oauth, spring social, user name and password, mobile phone verification code, social (WeChat, QQ, Weibo) and other common login methods, jwt-based sso, cluster session management and other functions.
 
 #### Software Dependency
-| Dependency | Version |
-| ---------------------- | ------------- |
-| Spring Boot | 2.5.6 |
-| Spring Cloud | 2020.0.4 |
-| Spring Cloud Alibaba | 2021.1 |
-| Spring Security OAuth2 | 2.3.6 |
-| HuTool | 5.7.15 |
+| Dependency             | Version    |
+|------------------------|------------|
+| Spring Boot            | 2.7.8      |
+| Spring Cloud           | 2021.0.5   |
+| Spring Cloud Alibaba   | 2021.0.4.0 |
+| Spring Security OAuth2 | 2.3.6      |
+| HuTool                 | 5.8.12     |
 
 #### Project Structure
-| Name | Description |
-| :---------------|:-----------:|
-| healthy-app | APP Module |
-| healthy-browser | Browser Module |
-| healthy-core | Core Module |
-| healthy-test | Test Engineering |
+| Name            |   Description    |
+|:----------------|:----------------:|
+| healthy-app     |    APP Module    |
+| healthy-browser |  Browser Module  |
+| healthy-core    |   Core Module    |
+| healthy-test    | Test Engineering |
 
 >Dependencies are: test depends on browser and app, browser and app depend on core.
 

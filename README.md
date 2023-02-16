@@ -4,13 +4,13 @@
 >通用安全模块  集成 spring securit、spring cloud oauth、spring social，实现用户名密码、手机验证码、社交(微信、QQ、微博)等常用登录方式、基于jwt的sso，集群session管理等功能。
 
 #### 软件依赖
-| 依赖                   | 版本           |
-| ---------------------- | ------------- |
-| Spring Boot            | 2.5.6         |
-| Spring Cloud           | 2020.0.4      |
-| Spring Cloud Alibaba   | 2021.1        |
-| Spring Security OAuth2 | 2.3.6         |
-| HuTool                 | 5.7.15         |
+| 依赖                   | 版本         |
+| ---------------------- |------------|
+| Spring Boot            | 2.7.8      |
+| Spring Cloud           | 2021.0.5   |
+| Spring Cloud Alibaba   | 2021.0.4.0 |
+| Spring Security OAuth2 | 2.3.6      |
+| HuTool                 | 5.8.12     |
 
 #### 项目结构
 | 名称             | 描述        |
