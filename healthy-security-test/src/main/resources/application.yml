@@ -5,13 +5,18 @@ spring:
     url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
     username: root
     password: 123456
-    max-active: 100
-    min-idle: 10
-    min-evictable-idle-time-millis: 1800000
-    test-on-borrow: true
-    test-on-return: true
-    test-while-idle: true
-    validation-query: select 1
+    # 配置全局hikari参数，请按需配置
+    hikari:
+      # 最小空闲连接 默认值10
+      minimum-idle: 10
+      # 最大连接数 默认值10
+      maximum-pool-size: 100
+      # 空闲连接超时时间 默认值600000，即10分钟
+      idle-timeout: 600000
+      # 连接超时时间 默认30000ms，即30s
+      connection-timeout: 30000
+      # 用于测试连接是否可用的查询语句
+      connection-test-query: SELECT 1
   # redis配置
   redis:
     host: localhost
